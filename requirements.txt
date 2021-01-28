@@ -1,0 +1,10 @@
+Flask==1.1.2
+numpy
+matplotlib
+torch
+torchvision
+torchtext
+pandas
+transformers
+tqdm
+
