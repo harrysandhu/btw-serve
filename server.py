@@ -1,9 +1,17 @@
 from flask import Flask, request, jsonify, json, make_response
 app = Flask(__name__)
 from transformers import pipeline, AutoTokenizer, AutoModel
+import torch
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print("using device: ", device)
+
+
 tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
 model = AutoModel.from_pretrained("facebook/bart-large-cnn")
-summarizer = pipeline("summarization", model="facebook/bart-large-cnn", framework="pt")
+summarizer = pipeline("summarization", device=0, model="facebook/bart-large-cnn", framework="pt")
+
+model = model.to(device)
 
 valid_api_keys = ['10321032']
 
